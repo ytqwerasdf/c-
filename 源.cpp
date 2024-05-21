@@ -11,18 +11,18 @@
 #pragma warning (disable: 4996)
 #pragma comment(lib,"winmm.lib")
 
-void initgamePicture();   //¼ÓÔØÓÎÏ·Í¼Æ¬
-void SetPlayer();       //ÏÔÊ¾½ÇÉ«ĞÅÏ¢
-void initPlayer();      //³õÊ¼»¯ÓÎÏ·½ÇÉ«
-void SetMap();         //¼ÓÔØÓÎÏ·µØÍ¼
-char* intToString(int Number); //°ÑÕûÊı×ª»¯³É×Ö·û´®
-void Flour(int Number);//ÏÔÊ¾Â¥²ã
-void playGame();          //¿ªÊ¼ÓÎÏ·
-void NewGame();        //ĞÂÓÎÏ·
-void SetItem();       //Ö÷²Ëµ¥
-void Change(int h, int temp);//¸ù¾İÂ¥²ã¼ÆËãÍæ¼ÒµÄ³õÊ¼Î»ÖÃ
-void CaLv();                //¼ÆËãµÈ¼¶
-void Messages();           //ÓÎÏ·ËµÃ÷
+void initgamePicture();   //åŠ è½½æ¸¸æˆå›¾ç‰‡
+void SetPlayer();       //æ˜¾ç¤ºè§’è‰²ä¿¡æ¯
+void initPlayer();      //åˆå§‹åŒ–æ¸¸æˆè§’è‰²
+void SetMap();         //åŠ è½½æ¸¸æˆåœ°å›¾
+char* intToString(int Number); //æŠŠæ•´æ•°è½¬åŒ–æˆå­—ç¬¦ä¸²
+void Flour(int Number);//æ˜¾ç¤ºæ¥¼å±‚
+void playGame();          //å¼€å§‹æ¸¸æˆ
+void NewGame();        //æ–°æ¸¸æˆ
+void SetItem();       //ä¸»èœå•
+void Change(int h, int temp);//æ ¹æ®æ¥¼å±‚è®¡ç®—ç©å®¶çš„åˆå§‹ä½ç½®
+void CaLv();                //è®¡ç®—ç­‰çº§
+void Messages();           //æ¸¸æˆè¯´æ˜
 void Music();
 int Combat(int x);
 int VS(int playHP, int playATT, int playDEF, int monHP, int monATT, int monDEF);
@@ -30,7 +30,7 @@ int VS(int playHP, int playATT, int playDEF, int monHP, int monATT, int monDEF);
 int playery, playerx, playerh;
 char str[20] = "";
 char str1[10] = "";
-//µØÍ¼1
+//åœ°å›¾1
 int map[10][13][13];
 IMAGE Wall, Ground, Green_Slime, Red_Slime, Blue_Cry, Red_Cry, Blue_Key, Yellow_Key,
 Red_Med, Blue_Med, upLadder,downLadder, Small_Skull, Big_Skull, Small_Bat, Small_Wizard,
@@ -38,30 +38,30 @@ Blue_door, Yellow_door, Player, Message, Item, a,champion;
 HWND hwnd;
 struct gamerole
 {
-	char name[20] = "ÑîÌÎ";  //Íæ¼ÒÃû×Ö
-	int HP;	    //ÑªÁ¿
+	char name[20] = "éª‘å£«";  //ç©å®¶åå­—
+	int HP;	    //è¡€é‡
 	int MP;
-	int DEF;	//·ÀÓù
-	int ATT;    //¹¥»÷
-	int Lv;     //µÈ¼¶
-	int Exp;    //¾­Ñé
-	int Num_Blue_Key; //À¶Ô¿³×ÊıÁ¿
+	int DEF;	//é˜²å¾¡
+	int ATT;    //æ”»å‡»
+	int Lv;     //ç­‰çº§
+	int Exp;    //ç»éªŒ
+	int Num_Blue_Key; //è“é’¥åŒ™æ•°é‡
 	int Num_Yellow_Key;
 }player;
 
-struct monster    //¹ÖÎïÊôĞÔ
+struct monster    //æ€ªç‰©å±æ€§
 {
-	int HP;	    //ÑªÁ¿
-	int ATT;    //¹¥»÷
-	int DEF;	//·ÀÓù
-	int Exp;    //¾­Ñé
+	int HP;	    //è¡€é‡
+	int ATT;    //æ”»å‡»
+	int DEF;	//é˜²å¾¡
+	int Exp;    //ç»éªŒ
 };
-struct monster Green_Slime_Pro = { 50,10,12,100 };    //ÂÌÊ·À³Ä·ÊôĞÔ     
-struct monster Red_Slime_Pro = { 60, 60, 12, 500 };  //ºìÊ·À³Ä·ÊôĞÔ
-struct monster Small_Wizard_Pro = { 100, 30, 9, 400 };//Ğ¡Î×Ê¦ÊôĞÔ
-struct monster Small_Bat_Pro = { 20, 10, 9, 50 };         //Ğ¡òùòğÊôĞÔ
-struct monster Small_Skull_Pro = { 30, 20, 10, 200 };   //Ğ¡÷¼÷ÃÊôĞÔ
-struct monster Big_Skull_Pro = { 60, 50, 25, 300 };     //´ó÷¼÷ÃÊôĞÔ
+struct monster Green_Slime_Pro = { 50,10,12,100 };    //ç»¿å²è±å§†å±æ€§     
+struct monster Red_Slime_Pro = { 60, 60, 12, 500 };  //çº¢å²è±å§†å±æ€§
+struct monster Small_Wizard_Pro = { 100, 30, 9, 400 };//å°å·«å¸ˆå±æ€§
+struct monster Small_Bat_Pro = { 20, 10, 9, 50 };         //å°è™è å±æ€§
+struct monster Small_Skull_Pro = { 30, 20, 10, 200 };   //å°éª·é«…å±æ€§
+struct monster Big_Skull_Pro = { 60, 50, 25, 300 };     //å¤§éª·é«…å±æ€§
 
 
 int main()
@@ -80,13 +80,13 @@ int main()
 }
 
 /*
-*ĞÂµÄÓÎÏ·
+*æ–°çš„æ¸¸æˆ
 */
 void NewGame()
 {
-	initPlayer(); //³õÊ¼»¯ÓÎÏ·½ÇÉ«ĞÅÏ¢
+	initPlayer(); //åˆå§‹åŒ–æ¸¸æˆè§’è‰²ä¿¡æ¯
 	FILE* fp; 
-	fp = fopen("map.txt", "r");//¶ÁÈ¡±£´æÔÚmap.txtÖĞµÄµØÍ¼
+	fp = fopen("map.txt", "r");//è¯»å–ä¿å­˜åœ¨map.txtä¸­çš„åœ°å›¾
 	for (int k = 0; k < 10; k++)
 		for (int i = 0; i < 13; i++)
 			for (int j = 0; j < 13; j++)
@@ -94,11 +94,11 @@ void NewGame()
 	fclose(fp);
 }
 /*
-*¼ÌĞøÓÎÏ·
+*ç»§ç»­æ¸¸æˆ
 */
 void KeepGame()
 {
-	FILE* fp; //¶ÁÈ¡±£´æÔÚkeepmap.txtÖĞµÄµØÍ¼
+	FILE* fp; //è¯»å–ä¿å­˜åœ¨keepmap.txtä¸­çš„åœ°å›¾
 	fp = fopen("keepmap.txt", "r");
 	for (int k = 0; k < 10; k++)
 		for (int i = 0; i < 13; i++)
@@ -121,7 +121,7 @@ void KeepGame()
 	fclose(fp);
 }
 /*
-*±£´æÓÎÏ·
+*ä¿å­˜æ¸¸æˆ
 */
 void SaveGame()
 {
@@ -151,11 +151,11 @@ void SaveGame()
 	fclose(fp);
 }
 
-/*ÓÎÏ·¿ªÊ¼µÄËÄ¸öÑ¡Ïî£º
-*nĞÂµÄÓÎÏ·
-*j¼ÌĞøÓÎÏ·
-*cÓÎÏ·ËµÃ÷
-*eÍË³öÓÎÏ·
+/*æ¸¸æˆå¼€å§‹çš„å››ä¸ªé€‰é¡¹ï¼š
+*næ–°çš„æ¸¸æˆ
+*jç»§ç»­æ¸¸æˆ
+*cæ¸¸æˆè¯´æ˜
+*eé€€å‡ºæ¸¸æˆ
 */
 void SetItem()
 {
@@ -163,19 +163,19 @@ void SetItem()
 	while (1) {
 		char ch = _getch();
 		switch (ch) {
-		case 'N':                //ĞÂµÄÓÎÏ·
+		case 'N':                //æ–°çš„æ¸¸æˆ
 		case 'n':NewGame(); return;
 			
 
-		case 'J':					//¼ÌĞøÓÎÏ·
+		case 'J':					//ç»§ç»­æ¸¸æˆ
 		case 'j':KeepGame(); return;
 			
 
-		case 'C':               //ÓÎÏ·ËµÃ÷
+		case 'C':               //æ¸¸æˆè¯´æ˜
 		case 'c': Messages();
 			break;
 
-		case 'E':     //ÍË³öÓÎÏ·
+		case 'E':     //é€€å‡ºæ¸¸æˆ
 		case 'e':exit(0); return;
 
 		}
@@ -184,7 +184,7 @@ void SetItem()
 
 }
 
-//¸ù¾İ²»Í¬Â¥²ãÏÔÊ¾½ÇÉ«µÄ³õÊ¼Î»ÖÃ
+//æ ¹æ®ä¸åŒæ¥¼å±‚æ˜¾ç¤ºè§’è‰²çš„åˆå§‹ä½ç½®
 void Change(int h, int temp)
 {
 	switch (h)
@@ -311,14 +311,14 @@ void Change(int h, int temp)
 	}
 }
 /*
-*ÏÔÊ¾½ÇÉ«ĞÅÏ¢
+*æ˜¾ç¤ºè§’è‰²ä¿¡æ¯
 */
 void SetPlayer()
 {
 	putimage(60 * 13, 0, &Message);
 	outtextxy(60 * 13 + 12, 100, player.name);
-	Flour(playerh + 1);          //Ëã²ãÊı
-	outtextxy(60 * 13 + 12, 0, str1); //´òÓ¡²ãÊı
+	Flour(playerh + 1);          //ç®—å±‚æ•°
+	outtextxy(60 * 13 + 12, 0, str1); //æ‰“å°å±‚æ•°
 	outtextxy(60 * 13 + 12, 180, intToString(player.Lv));
 	outtextxy(60 * 13 + 12, 235, intToString(player.Exp));
 	outtextxy(60 * 13 + 12, 362, intToString(player.HP));
@@ -332,46 +332,46 @@ void SetPlayer()
 
 void Music()
 {
-	PlaySound(TEXT("·´·½ÏòµÄÖÓ.wav"), 0, SND_FILENAME | SND_ASYNC | SND_LOOP);
+	PlaySound(TEXT("åæ–¹å‘çš„é’Ÿ.wav"), 0, SND_FILENAME | SND_ASYNC | SND_LOOP);
 }
 /*
-*   ¼ÓÔØÓÎÏ·Í¼Æ¬
+*   åŠ è½½æ¸¸æˆå›¾ç‰‡
 */
 void initgamePicture()
 {
-	loadimage(&Wall, "Ç½.jpg", 60, 60);
-	loadimage(&Ground, "µØ°å.jpg", 60, 60);
-	loadimage(&Green_Slime, "ÂÌÊ·À³Ä·.jpg", 60, 60);
-	loadimage(&Red_Slime, "ºìÊ·À³Ä·.jpg", 60, 60);
+	loadimage(&Wall, "å¢™.jpg", 60, 60);
+	loadimage(&Ground, "åœ°æ¿.jpg", 60, 60);
+	loadimage(&Green_Slime, "ç»¿å²è±å§†.jpg", 60, 60);
+	loadimage(&Red_Slime, "çº¢å²è±å§†.jpg", 60, 60);
 
-	loadimage(&Blue_Cry, "À¶Ë®¾§.jpg", 60, 60);
-	loadimage(&Red_Cry, "ºìË®¾§.jpg", 60, 60);
+	loadimage(&Blue_Cry, "è“æ°´æ™¶.jpg", 60, 60);
+	loadimage(&Red_Cry, "çº¢æ°´æ™¶.jpg", 60, 60);
 
-	loadimage(&Blue_Key, "À¶Ô¿³×.jpg", 60, 60);
-	loadimage(&Yellow_Key, "»ÆÔ¿³×.jpg", 60, 60);
+	loadimage(&Blue_Key, "è“é’¥åŒ™.jpg", 60, 60);
+	loadimage(&Yellow_Key, "é»„é’¥åŒ™.jpg", 60, 60);
 
-	loadimage(&Red_Med, "Ğ¡ºìÒ©Ë®.jpg", 60, 60);
-	loadimage(&Blue_Med, "Ğ¡À¶Ò©Ë®.jpg", 60, 60);
-	loadimage(&champion, "Í¼¼ø.jpg", 60, 60);
+	loadimage(&Red_Med, "å°çº¢è¯æ°´.jpg", 60, 60);
+	loadimage(&Blue_Med, "å°è“è¯æ°´.jpg", 60, 60);
+	loadimage(&champion, "å›¾é‰´.jpg", 60, 60);
 
-	loadimage(&upLadder, "ÉÏÌİ×Ó.jpg", 60, 60);
-	loadimage(&downLadder, "ÏÂÌİ×Ó.png", 60, 60);
-	loadimage(&Small_Bat, "Ğ¡òùòğ.jpg", 60, 60);
-	loadimage(&Small_Wizard, "Ğ¡Î×Ê¦.jpg", 60, 60);
-	loadimage(&Small_Skull, "÷¼÷Ã±ø.jpg", 60, 60);
-	loadimage(&Big_Skull, "´ó÷¼÷Ã±ø.jpg", 60, 60);
+	loadimage(&upLadder, "ä¸Šæ¢¯å­.jpg", 60, 60);
+	loadimage(&downLadder, "ä¸‹æ¢¯å­.png", 60, 60);
+	loadimage(&Small_Bat, "å°è™è .jpg", 60, 60);
+	loadimage(&Small_Wizard, "å°å·«å¸ˆ.jpg", 60, 60);
+	loadimage(&Small_Skull, "éª·é«…å…µ.jpg", 60, 60);
+	loadimage(&Big_Skull, "å¤§éª·é«…å…µ.jpg", 60, 60);
 
-	loadimage(&Blue_door, "À¶ÃÅ.jpg", 60, 60);
-	loadimage(&Yellow_door, "»ÆÃÅ.jpg", 60, 60);
-	loadimage(&Player, "ÈË.jpg", 60, 60);
+	loadimage(&Blue_door, "è“é—¨.jpg", 60, 60);
+	loadimage(&Yellow_door, "é»„é—¨.jpg", 60, 60);
+	loadimage(&Player, "äºº.jpg", 60, 60);
 	loadimage(&Message, "info.jpg");
-	loadimage(&a, "ÓÎÏ·ËµÃ÷.jpg", 840, 780);
-	//loadimage(&a, "Ä§Ëş.jpeg", 840, 780);
-	loadimage(&Item, "²Ëµ¥.jpg", 840, 780);
+	loadimage(&a, "æ¸¸æˆè¯´æ˜.jpg", 840, 780);
+	//loadimage(&a, "é­”å¡”.jpeg", 840, 780);
+	loadimage(&Item, "èœå•.jpg", 840, 780);
 }
 
 /*
-*³õÊ¼»¯ÓÎÏ·½ÇÉ«
+*åˆå§‹åŒ–æ¸¸æˆè§’è‰²
 */
 void initPlayer()
 {
@@ -388,40 +388,40 @@ void initPlayer()
 	playerh = 0;
 }
 
-//ÕûÊı×ª»»Îª×Ö·û
+//æ•´æ•°è½¬æ¢ä¸ºå­—ç¬¦
 void Flour(int Number)
 {
 	switch (Number)
 	{
 	case 1:
-		strcpy(str1, "µÚÒ»²ã");
+		strcpy(str1, "ç¬¬ä¸€å±‚");
 		break;
 	case 2:
-		strcpy(str1, "µÚ¶ş²ã");
+		strcpy(str1, "ç¬¬äºŒå±‚");
 		break;
 	case 3:
-		strcpy(str1, "µÚÈı²ã");
+		strcpy(str1, "ç¬¬ä¸‰å±‚");
 		break;
 	case 4:
-		strcpy(str1, "µÚËÄ²ã");
+		strcpy(str1, "ç¬¬å››å±‚");
 		break;
 	case 5:
-		strcpy(str1, "µÚÎå²ã");
+		strcpy(str1, "ç¬¬äº”å±‚");
 		break;
 	case 6:
-		strcpy(str1, "µÚÁù²ã");
+		strcpy(str1, "ç¬¬å…­å±‚");
 		break;
 	case 7:
-		strcpy(str1, "µÚÆß²ã");
+		strcpy(str1, "ç¬¬ä¸ƒå±‚");
 		break;
 	case 8:
-		strcpy(str1, "µÚ°Ë²ã");
+		strcpy(str1, "ç¬¬å…«å±‚");
 		break;
 	case 9:
-		strcpy(str1, "µÚ¾Å²ã");
+		strcpy(str1, "ç¬¬ä¹å±‚");
 		break;
 	case 10:
-		strcpy(str1, "µÚÊ®²ã");
+		strcpy(str1, "ç¬¬åå±‚");
 		break;
 	}
 
@@ -449,7 +449,7 @@ char* intToString(int Number)
 }
 
 /*
-*¼ÓÔØÓÎÏ·µØÍ¼
+*åŠ è½½æ¸¸æˆåœ°å›¾
 *
 */
 void SetMap()
@@ -462,61 +462,61 @@ void SetMap()
 			{
 
 			case 0:
-				putimage(j * 60, i * 60, &Wall);          //Ç½
+				putimage(j * 60, i * 60, &Wall);          //å¢™
 				break;
 			case 1:
-				putimage(j * 60, i * 60, &Ground);        //µØ°å
+				putimage(j * 60, i * 60, &Ground);        //åœ°æ¿
 				break;
 			case 2:
-				putimage(j * 60, i * 60, &Blue_door);     //À¶ÃÅ
+				putimage(j * 60, i * 60, &Blue_door);     //è“é—¨
 				break;
 			case 3:
-				putimage(j * 60, i * 60, &Yellow_door);    //»ÆÃÅ
+				putimage(j * 60, i * 60, &Yellow_door);    //é»„é—¨
 				break;
 			case 4:
-				putimage(j * 60, i * 60, &Blue_Cry);         //À¶Ë®¾§
+				putimage(j * 60, i * 60, &Blue_Cry);         //è“æ°´æ™¶
 				break;
 			case 5:
-				putimage(j * 60, i * 60, &Red_Cry);          //ºìË®¾§
+				putimage(j * 60, i * 60, &Red_Cry);          //çº¢æ°´æ™¶
 				break;
 			case 6:
-				putimage(j * 60, i * 60, &Blue_Key);        //À¶Ô¿³×
+				putimage(j * 60, i * 60, &Blue_Key);        //è“é’¥åŒ™
 				break;
 			case 7:
-				putimage(j * 60, i * 60, &Yellow_Key);     //»ÆÔ¿³×
+				putimage(j * 60, i * 60, &Yellow_Key);     //é»„é’¥åŒ™
 				break;
 			case 8:
-				putimage(j * 60, i * 60, &Red_Med);          //ºìÒ©Ë®
+				putimage(j * 60, i * 60, &Red_Med);          //çº¢è¯æ°´
 				break;
 			case 9:
-				putimage(j * 60, i * 60, &Blue_Med);         //À¶Ò©Ë®
+				putimage(j * 60, i * 60, &Blue_Med);         //è“è¯æ°´
 				break;
 			case 10:
-				putimage(j * 60, i * 60, &Small_Bat);        //Ğ¡òùòğ
+				putimage(j * 60, i * 60, &Small_Bat);        //å°è™è 
 				break;
 			case 11:
-				putimage(j * 60, i * 60, &Small_Wizard);     //Ğ¡Î×Ê¦
+				putimage(j * 60, i * 60, &Small_Wizard);     //å°å·«å¸ˆ
 				break;
 			case 12:
-				putimage(j * 60, i * 60, &Small_Skull);      //Ğ¡÷¼÷Ã
+				putimage(j * 60, i * 60, &Small_Skull);      //å°éª·é«…
 				break;
 			case 13:
-				putimage(j * 60, i * 60, &Big_Skull);        //´ó÷¼÷Ã
+				putimage(j * 60, i * 60, &Big_Skull);        //å¤§éª·é«…
 				break;
 			case 14:
-				putimage(j * 60, i * 60, &Green_Slime);      //ÂÌÊ·À³Ä·
+				putimage(j * 60, i * 60, &Green_Slime);      //ç»¿å²è±å§†
 				break;
 			case 15:
-				putimage(j * 60, i * 60, &Red_Slime);        //ºìÊ·À³Ä·
+				putimage(j * 60, i * 60, &Red_Slime);        //çº¢å²è±å§†
 				break;
 			case 97:
-				putimage(j * 60, i * 60, &downLadder);         //ÏÂÂ¥Ìİ×Ó
+				putimage(j * 60, i * 60, &downLadder);         //ä¸‹æ¥¼æ¢¯å­
 				break;
 			case 98:
-				putimage(j * 60, i * 60, &upLadder);         //ÉÏÂ¥Ìİ×Ó
+				putimage(j * 60, i * 60, &upLadder);         //ä¸Šæ¥¼æ¢¯å­
 				break;
 			case 99:
-				putimage(j * 60, i * 60, &Player);          //Íæ¼Ò
+				putimage(j * 60, i * 60, &Player);          //ç©å®¶
 				break;
 			case 100:
 				putimage(j * 60, i * 60, &champion);
@@ -532,7 +532,7 @@ int Combat(int x)
 	int ID;
 	switch (x) {
 	case 10:
-		ID = MessageBox(NULL, "Ğ¡òùòğ", "ÊÇ·ñ¹¥»÷£¿", MB_YESNO);
+		ID = MessageBox(NULL, "å°è™è ", "æ˜¯å¦æ”»å‡»ï¼Ÿ", MB_YESNO);
 		if (ID == IDYES)
 		{
 			if (VS(player.HP, player.ATT, player.DEF, Small_Bat_Pro.HP, Small_Bat_Pro.ATT, Small_Bat_Pro.DEF)) {
@@ -543,7 +543,7 @@ int Combat(int x)
 		}
 		break;
 	case 11:
-		ID = MessageBox(NULL, "Óöµ½Ğ¡Î×Ê¦", "ÊÇ·ñ¹¥»÷£¿", MB_YESNO);
+		ID = MessageBox(NULL, "é‡åˆ°å°å·«å¸ˆ", "æ˜¯å¦æ”»å‡»ï¼Ÿ", MB_YESNO);
 		if (ID == IDYES)
 		{
 			if (VS(player.HP, player.ATT, player.DEF, Small_Wizard_Pro.HP, Small_Wizard_Pro.ATT, Small_Wizard_Pro.DEF)) {
@@ -554,7 +554,7 @@ int Combat(int x)
 		}
 		break;
 	case 12:
-		ID = MessageBox(NULL, "Óöµ½Ğ¡÷¼÷Ã", "ÊÇ·ñ¹¥»÷£¿", MB_YESNO);
+		ID = MessageBox(NULL, "é‡åˆ°å°éª·é«…", "æ˜¯å¦æ”»å‡»ï¼Ÿ", MB_YESNO);
 		if (ID == IDYES)
 		{
 			if (VS(player.HP, player.ATT, player.DEF, Small_Skull_Pro.HP, Small_Skull_Pro.ATT, Small_Skull_Pro.DEF)) {
@@ -565,7 +565,7 @@ int Combat(int x)
 		}
 		break;
 	case 13:
-		ID = MessageBox(NULL, "Óöµ½´ó÷¼÷Ã", "ÊÇ·ñ¹¥»÷£¿", MB_YESNO);
+		ID = MessageBox(NULL, "é‡åˆ°å¤§éª·é«…", "æ˜¯å¦æ”»å‡»ï¼Ÿ", MB_YESNO);
 		if (ID == IDYES)
 		{
 			if (VS(player.HP, player.ATT, player.DEF, Big_Skull_Pro.HP, Big_Skull_Pro.ATT, Big_Skull_Pro.DEF)) {
@@ -576,7 +576,7 @@ int Combat(int x)
 		}
 		break;
 	case 14:
-		ID = MessageBox(NULL, "Óöµ½ÂÌÊ·À³Ä·", "ÊÇ·ñ¹¥»÷£¿", MB_YESNO);
+		ID = MessageBox(NULL, "é‡åˆ°ç»¿å²è±å§†", "æ˜¯å¦æ”»å‡»ï¼Ÿ", MB_YESNO);
 		if (ID == IDYES)
 		{
 			if (VS(player.HP, player.ATT, player.DEF, Green_Slime_Pro.HP, Green_Slime_Pro.ATT, Green_Slime_Pro.DEF)) {
@@ -587,7 +587,7 @@ int Combat(int x)
 		}
 		break;
 	case 15:
-		ID = MessageBox(NULL, "Óöµ½ºìÊ·À³Ä·", "ÊÇ·ñ¹¥»÷£¿", MB_YESNO);
+		ID = MessageBox(NULL, "é‡åˆ°çº¢å²è±å§†", "æ˜¯å¦æ”»å‡»ï¼Ÿ", MB_YESNO);
 		if (ID == IDYES)
 		{
 			if (VS(player.HP, player.ATT, player.DEF, Red_Slime_Pro.HP, Red_Slime_Pro.ATT, Red_Slime_Pro.DEF)) {
@@ -601,7 +601,7 @@ int Combat(int x)
 	}
 	return 0;
 }
-//¼ÆËãµÈ¼¶
+//è®¡ç®—ç­‰çº§
 void CaLv()
 {
 	if (player.Exp >= player.Lv * 1000) {
@@ -614,7 +614,7 @@ void CaLv()
 
 }
 
-//ÓÎÏ·ËµÃ÷
+//æ¸¸æˆè¯´æ˜
 void Messages()
 {
 	putimage(0, 0, &a);
@@ -622,13 +622,13 @@ void Messages()
 	SetItem();
 }
 
-//¼ÆËãÕ½¶·ÊÇ·ñÊ¤Àû
+//è®¡ç®—æˆ˜æ–—æ˜¯å¦èƒœåˆ©
 int VS(int playHP, int playATT, int playDEF, int monHP, int monATT, int monDEF)
 {
 	int loss = 0;
 	int count = 0;
 	if (playATT < monDEF) {
-		MessageBox(NULL, "", "´ò²»¹ı", MB_YESNO);
+		MessageBox(NULL, "", "æ‰“ä¸è¿‡", MB_YESNO);
 		return 0;
 	}
 	else {
@@ -637,10 +637,10 @@ int VS(int playHP, int playATT, int playDEF, int monHP, int monATT, int monDEF)
 			return 1;
 		}
 		else {
-			count = monHP / (playATT - monDEF);     //µ±´ÎÊı¸ÕºÃÎªÕûÊıÊ±loss = £¨count-1£© * (monATT - playDEF)
+			count = monHP / (playATT - monDEF);     //å½“æ¬¡æ•°åˆšå¥½ä¸ºæ•´æ•°æ—¶loss = ï¼ˆcount-1ï¼‰ * (monATT - playDEF)
 			loss = count * (monATT - playDEF);
 			if (loss >= player.HP) {
-				MessageBox(NULL, "", "´ò²»¹ı", MB_YESNO);
+				MessageBox(NULL, "", "æ‰“ä¸è¿‡", MB_YESNO);
 				return 0;
 			}
 			else {
@@ -663,7 +663,7 @@ void playGame()
 		switch (ch) {
 		case 'q':
 		case 'Q':
-			ID = MessageBox(NULL, "±£´æÓÎÏ·", "ÊÇ·ñ±£´æÓÎÏ·£¿", MB_YESNO);
+			ID = MessageBox(NULL, "ä¿å­˜æ¸¸æˆ", "æ˜¯å¦ä¿å­˜æ¸¸æˆï¼Ÿ", MB_YESNO);
 			if (ID == IDYES)
 			{
 				SaveGame();
@@ -673,24 +673,24 @@ void playGame()
 		case 'w':
 		case 'W':
 		case 72:
-			if (map[playerh][playery - 1][playerx] == 1) {         //ÏÂÒ»²½ÊÇµØ°å
+			if (map[playerh][playery - 1][playerx] == 1) {         //ä¸‹ä¸€æ­¥æ˜¯åœ°æ¿
 				map[playerh][playery - 1][playerx] = 99;
 				map[playerh][playery][playerx] = 1;
 				playery--;
 			}
-			else if (map[playerh][playery - 1][playerx] == 6) {      //ÏÂÒ»²½ÊÇÀ¶Ô¿³×
+			else if (map[playerh][playery - 1][playerx] == 6) {      //ä¸‹ä¸€æ­¥æ˜¯è“é’¥åŒ™
 				player.Num_Blue_Key++;
 				map[playerh][playery - 1][playerx] = 99;
 				map[playerh][playery][playerx] = 1;
 				playery--;
 			}
-			else if (map[playerh][playery - 1][playerx] == 7) {     //ÏÂÒ»²½ÊÇ»ÆÔ¿³×
+			else if (map[playerh][playery - 1][playerx] == 7) {     //ä¸‹ä¸€æ­¥æ˜¯é»„é’¥åŒ™
 				player.Num_Yellow_Key++;
 				map[playerh][playery - 1][playerx] = 99;
 				map[playerh][playery][playerx] = 1;
 				playery--;
 			}
-			//ÏÂÒ»²½ÊÇ¹ÖÎï
+			//ä¸‹ä¸€æ­¥æ˜¯æ€ªç‰©
 			else if (map[playerh][playery - 1][playerx] == 10 || map[playerh][playery - 1][playerx] == 11 ||
 				map[playerh][playery - 1][playerx] == 12 || map[playerh][playery - 1][playerx] == 13 ||
 				map[playerh][playery - 1][playerx] == 14 || map[playerh][playery - 1][playerx] == 15)
@@ -702,17 +702,17 @@ void playGame()
 					playery--;
 				}
 			}
-			//ºìÀ¶Ò©Ë®
+			//çº¢è“è¯æ°´
 			else if (map[playerh][playery - 1][playerx] == 8 || map[playerh][playery - 1][playerx] == 9) {
 				if (map[playerh][playery - 1][playerx] == 8)
-					player.HP += 500;   //ºìÉ«Ò©Ë®¼Ó500hp
+					player.HP += 500;   //çº¢è‰²è¯æ°´åŠ 500hp
 				else
-					player.HP += 200;  //À¶É«Ò©Ë®¼Ó200hp
+					player.HP += 200;  //è“è‰²è¯æ°´åŠ 200hp
 				map[playerh][playery - 1][playerx] = 99;
 				map[playerh][playery][playerx] = 1;
 				playery--;
 			}
-			//2:À¶ÃÅ3:»ÆÃÅ
+			//2:è“é—¨3:é»„é—¨
 			else if (map[playerh][playery - 1][playerx] == 2 || map[playerh][playery - 1][playerx] == 3) {
 				if (map[playerh][playery - 1][playerx] == 2 && player.Num_Blue_Key) {
 					player.Num_Blue_Key--;
@@ -727,9 +727,9 @@ void playGame()
 					playery--;
 				}
 			}
-			//ºìÀ¶Ë®¾§
-			//ºìË®¾§+2¹¥»÷
-			//À¶Ë®¾§+2·ÀÓù
+			//çº¢è“æ°´æ™¶
+			//çº¢æ°´æ™¶+2æ”»å‡»
+			//è“æ°´æ™¶+2é˜²å¾¡
 			else if (map[playerh][playery - 1][playerx] == 4 || map[playerh][playery - 1][playerx] == 5) {
 				if (map[playerh][playery - 1][playerx] == 4)
 					player.DEF += 2;
@@ -739,9 +739,9 @@ void playGame()
 				map[playerh][playery][playerx] = 1;
 				playery--;
 			}
-			//ÏÂÒ»²½ÊÇ»ñÊ¤½±±­
+			//ä¸‹ä¸€æ­¥æ˜¯è·èƒœå¥–æ¯
 			else if (map[playerh][playery - 1][playerx] == 100) {
-				ID = MessageBox(NULL, "ÊÇ·ñÍË³öÓÎÏ·", "you win £¡£¡", MB_YESNO);
+				ID = MessageBox(NULL, "æ˜¯å¦é€€å‡ºæ¸¸æˆ", "you win ï¼ï¼", MB_YESNO);
 				if (ID == IDYES)
 				{
 					exit(0);
@@ -750,14 +750,14 @@ void playGame()
 				map[playerh][playery][playerx] = 1;
 				playery--;
 			}
-			//ÏÂÒ»²½ÊÇÏòÉÏµÄÂ¥Ìİ
+			//ä¸‹ä¸€æ­¥æ˜¯å‘ä¸Šçš„æ¥¼æ¢¯
 			else if (map[playerh][playery - 1][playerx] == 98) {
 				map[playerh][playery][playerx] = 1;
 				playerh++;
 				Change(playerh, 1);
 			}
 			
-			//ÏÂÒ»²½ÊÇÏòÏÂµÄÂ¥Ìİ
+			//ä¸‹ä¸€æ­¥æ˜¯å‘ä¸‹çš„æ¥¼æ¢¯
 			else if (map[playerh][playery - 1][playerx] == 97) {
 				map[playerh][playery][playerx] = 1;
 				playerh--;
@@ -767,24 +767,24 @@ void playGame()
 		case 's':
 		case 'S':
 		case 80:
-			if (map[playerh][playery + 1][playerx] == 1) {         //ÏÂÒ»²½ÊÇµØ°å
+			if (map[playerh][playery + 1][playerx] == 1) {         //ä¸‹ä¸€æ­¥æ˜¯åœ°æ¿
 				map[playerh][playery + 1][playerx] = 99;
 				map[playerh][playery][playerx] = 1;
 				playery++;
 			}
-			else if (map[playerh][playery + 1][playerx] == 6) {      //ÏÂÒ»²½ÊÇÀ¶Ô¿³×
+			else if (map[playerh][playery + 1][playerx] == 6) {      //ä¸‹ä¸€æ­¥æ˜¯è“é’¥åŒ™
 				player.Num_Blue_Key++;
 				map[playerh][playery + 1][playerx] = 99;
 				map[playerh][playery][playerx] = 1;
 				playery++;
 			}
-			else if (map[playerh][playery + 1][playerx] == 7) {     //ÏÂÒ»²½ÊÇ»ÆÔ¿³×
+			else if (map[playerh][playery + 1][playerx] == 7) {     //ä¸‹ä¸€æ­¥æ˜¯é»„é’¥åŒ™
 				player.Num_Yellow_Key++;
 				map[playerh][playery + 1][playerx] = 99;
 				map[playerh][playery][playerx] = 1;
 				playery++;
 			}
-			//ÏÂÒ»²½ÊÇ¹ÖÎï
+			//ä¸‹ä¸€æ­¥æ˜¯æ€ªç‰©
 			else if (map[playerh][playery + 1][playerx] == 10 || map[playerh][playery + 1][playerx] == 11 ||
 				map[playerh][playery + 1][playerx] == 12 || map[playerh][playery + 1][playerx] == 13 ||
 				map[playerh][playery + 1][playerx] == 14 || map[playerh][playery + 1][playerx] == 15)
@@ -796,7 +796,7 @@ void playGame()
 					playery++;
 				}
 			}
-			//ºìÀ¶Ò©Ë®
+			//çº¢è“è¯æ°´
 			else if (map[playerh][playery + 1][playerx] == 8 || map[playerh][playery + 1][playerx] == 9) {
 				if (map[playerh][playery + 1][playerx] == 8)
 					player.HP += 200;
@@ -806,7 +806,7 @@ void playGame()
 				map[playerh][playery][playerx] = 1;
 				playery++;
 			}
-			//ºìÀ¶ÃÅ
+			//çº¢è“é—¨
 			else if (map[playerh][playery + 1][playerx] == 2 || map[playerh][playery + 1][playerx] == 3) {
 				if (map[playerh][playery + 1][playerx] == 2 && player.Num_Blue_Key) {
 					player.Num_Blue_Key++;
@@ -821,9 +821,9 @@ void playGame()
 					playery++;
 				}
 			}
-			//ºìÀ¶Ë®¾§
-			//ºìË®¾§+2¹¥»÷
-			//À¶Ë®¾§+2·ÀÓù
+			//çº¢è“æ°´æ™¶
+			//çº¢æ°´æ™¶+2æ”»å‡»
+			//è“æ°´æ™¶+2é˜²å¾¡
 			else if (map[playerh][playery + 1][playerx] == 4 || map[playerh][playery + 1][playerx] == 5) {
 				if (map[playerh][playery + 1][playerx] == 4)
 					player.DEF += 2;
@@ -833,9 +833,9 @@ void playGame()
 				map[playerh][playery][playerx] = 1;
 				playery++;
 			}
-			//ÏÂÒ»²½ÊÇ»ñÊ¤½±±­
+			//ä¸‹ä¸€æ­¥æ˜¯è·èƒœå¥–æ¯
 			else if (map[playerh][playery + 1][playerx] == 100) {
-				ID = MessageBox(NULL, "ÊÇ·ñÍË³öÓÎÏ·", "you win £¡£¡", MB_YESNO);
+				ID = MessageBox(NULL, "æ˜¯å¦é€€å‡ºæ¸¸æˆ", "you win ï¼ï¼", MB_YESNO);
 				if (ID == IDYES)
 				{
 					exit(0);
@@ -844,13 +844,13 @@ void playGame()
 				map[playerh][playery][playerx] = 1;
 				playery++;
 			}
-			//ÏÂÒ»²½ÊÇÏòÉÏÂ¥Ìİ
+			//ä¸‹ä¸€æ­¥æ˜¯å‘ä¸Šæ¥¼æ¢¯
 			else if (map[playerh][playery + 1][playerx] == 98) {
 				map[playerh][playery][playerx] = 1;
 				playerh++;
 				Change(playerh, 1);
 			}
-			//ÏÂÒ»²½ÊÇÏòÏÂÂ¥Ìİ
+			//ä¸‹ä¸€æ­¥æ˜¯å‘ä¸‹æ¥¼æ¢¯
 			else if (map[playerh][playery + 1][playerx] == 97) {
 				map[playerh][playery][playerx] = 1;
 				playerh--;
@@ -859,24 +859,24 @@ void playGame()
 			break;
 		case 'a':
 		case 75:
-			if (map[playerh][playery][playerx - 1] == 1) {         //ÏÂÒ»²½ÊÇµØ°å
+			if (map[playerh][playery][playerx - 1] == 1) {         //ä¸‹ä¸€æ­¥æ˜¯åœ°æ¿
 				map[playerh][playery][playerx - 1] = 99;
 				map[playerh][playery][playerx] = 1;
 				playerx--;
 			}
-			else if (map[playerh][playery][playerx - 1] == 6) {      //ÏÂÒ»²½ÊÇÀ¶Ô¿³×
+			else if (map[playerh][playery][playerx - 1] == 6) {      //ä¸‹ä¸€æ­¥æ˜¯è“é’¥åŒ™
 				player.Num_Blue_Key++;
 				map[playerh][playery][playerx - 1] = 99;
 				map[playerh][playery][playerx] = 1;
 				playerx--;
 			}
-			else if (map[playerh][playery][playerx - 1] == 7) {     //ÏÂÒ»²½ÊÇ»ÆÔ¿³×
+			else if (map[playerh][playery][playerx - 1] == 7) {     //ä¸‹ä¸€æ­¥æ˜¯é»„é’¥åŒ™
 				player.Num_Yellow_Key++;
 				map[playerh][playery][playerx - 1] = 99;
 				map[playerh][playery][playerx] = 1;
 				playerx--;
 			}
-			//ÏÂÒ»²½ÊÇ¹ÖÎï
+			//ä¸‹ä¸€æ­¥æ˜¯æ€ªç‰©
 			else if (map[playerh][playery][playerx - 1] == 10 || map[playerh][playery][playerx - 1] == 11 ||
 				map[playerh][playery][playerx - 1] == 12 || map[playerh][playery][playerx - 1] == 13 ||
 				map[playerh][playery][playerx - 1] == 14 || map[playerh][playery][playerx - 1] == 15)
@@ -888,7 +888,7 @@ void playGame()
 					playerx--;
 				}
 			}
-			//ºìÀ¶Ò©Ë®
+			//çº¢è“è¯æ°´
 			else if (map[playerh][playery][playerx - 1] == 8 || map[playerh][playery][playerx - 1] == 9) {
 				if (map[playerh][playery][playerx - 1] == 8)
 					player.HP += 200;
@@ -898,7 +898,7 @@ void playGame()
 				map[playerh][playery][playerx] = 1;
 				playerx--;
 			}
-			//ºìÀ¶ÃÅ
+			//çº¢è“é—¨
 			else if (map[playerh][playery][playerx - 1] == 2 || map[playerh][playery][playerx - 1] == 3) {
 				if (map[playerh][playery][playerx - 1] == 2 && player.Num_Blue_Key) {
 					player.Num_Blue_Key--;
@@ -913,9 +913,9 @@ void playGame()
 					playerx--;
 				}
 			}
-			//ºìÀ¶Ë®¾§
-			//ºìË®¾§+2¹¥»÷
-			//À¶Ë®¾§+2·ÀÓù
+			//çº¢è“æ°´æ™¶
+			//çº¢æ°´æ™¶+2æ”»å‡»
+			//è“æ°´æ™¶+2é˜²å¾¡
 			else if (map[playerh][playery][playerx - 1] == 4 || map[playerh][playery][playerx - 1] == 5) {
 				if (map[playerh][playery][playerx - 1] == 4)
 					player.DEF += 2;
@@ -925,9 +925,9 @@ void playGame()
 				map[playerh][playery][playerx] = 1;
 				playerx--;
 			}
-			//ÏÂÒ»²½ÊÇ½±±­
+			//ä¸‹ä¸€æ­¥æ˜¯å¥–æ¯
 			else if (map[playerh][playery ][playerx - 1] == 100) {
-				ID = MessageBox(NULL, "ÊÇ·ñÍË³öÓÎÏ·", "you win £¡£¡", MB_YESNO);
+				ID = MessageBox(NULL, "æ˜¯å¦é€€å‡ºæ¸¸æˆ", "you win ï¼ï¼", MB_YESNO);
 				if (ID == IDYES)
 				{
 					exit(0);
@@ -936,13 +936,13 @@ void playGame()
 				map[playerh][playery][playerx] = 1;
 				playerx--;
 			}
-			//ÏÂÒ»²½ÊÇÏòÉÏÂ¥Ìİ
+			//ä¸‹ä¸€æ­¥æ˜¯å‘ä¸Šæ¥¼æ¢¯
 			else if (map[playerh][playery][playerx - 1] == 98) {
 				map[playerh][playery][playerx] = 1;
 				playerh++;
 				Change(playerh, 1);
 			}
-			//ÏÂÒ»²½ÊÇÏòÏÂÂ¥Ìİ
+			//ä¸‹ä¸€æ­¥æ˜¯å‘ä¸‹æ¥¼æ¢¯
 			else if (map[playerh][playery][playerx - 1] == 97) {
 				map[playerh][playery][playerx] = 1;
 				playerh--;
@@ -952,24 +952,24 @@ void playGame()
 		case 'd':
 		case 'D':
 		case 77:
-			if (map[playerh][playery][playerx + 1] == 1) {         //ÏÂÒ»²½ÊÇµØ°å
+			if (map[playerh][playery][playerx + 1] == 1) {         //ä¸‹ä¸€æ­¥æ˜¯åœ°æ¿
 				map[playerh][playery][playerx + 1] = 99;
 				map[playerh][playery][playerx] = 1;
 				playerx++;
 			}
-			else if (map[playerh][playery][playerx + 1] == 6) {      //ÏÂÒ»²½ÊÇÀ¶Ô¿³×
+			else if (map[playerh][playery][playerx + 1] == 6) {      //ä¸‹ä¸€æ­¥æ˜¯è“é’¥åŒ™
 				player.Num_Blue_Key++;
 				map[playerh][playery][playerx + 1] = 99;
 				map[playerh][playery][playerx] = 1;
 				playerx++;
 			}
-			else if (map[playerh][playery][playerx + 1] == 7) {     //ÏÂÒ»²½ÊÇ»ÆÔ¿³×
+			else if (map[playerh][playery][playerx + 1] == 7) {     //ä¸‹ä¸€æ­¥æ˜¯é»„é’¥åŒ™
 				player.Num_Yellow_Key++;
 				map[playerh][playery][playerx + 1] = 99;
 				map[playerh][playery][playerx] = 1;
 				playerx++;
 			}
-			//ÏÂÒ»²½ÊÇ¹ÖÎï
+			//ä¸‹ä¸€æ­¥æ˜¯æ€ªç‰©
 			else if (map[playerh][playery][playerx + 1] == 10 || map[playerh][playery][playerx + 1] == 11 ||
 				map[playerh][playery][playerx + 1] == 12 || map[playerh][playery][playerx + 1] == 13 ||
 				map[playerh][playery][playerx + 1] == 14 || map[playerh][playery][playerx + 1] == 15)
@@ -981,7 +981,7 @@ void playGame()
 					playerx++;
 				}
 			}
-			//ºìÀ¶Ò©Ë®
+			//çº¢è“è¯æ°´
 			else if (map[playerh][playery][playerx + 1] == 8 || map[playerh][playery][playerx + 1] == 9) {
 				if (map[playerh][playery][playerx + 1] == 8)
 					player.HP += 200;
@@ -991,7 +991,7 @@ void playGame()
 				map[playerh][playery][playerx] = 1;
 				playerx++;
 			}
-			//ºìÀ¶ÃÅ
+			//çº¢è“é—¨
 			else if (map[playerh][playery][playerx + 1] == 2 || map[playerh][playery][playerx + 1] == 3) {
 				if (map[playerh][playery][playerx + 1] == 2 && player.Num_Blue_Key) {
 					player.Num_Blue_Key--;
@@ -1006,9 +1006,9 @@ void playGame()
 					playerx++;
 				}
 			}
-			//ºìÀ¶Ë®¾§
-			//ºìË®¾§+2¹¥»÷
-			//À¶Ë®¾§+2·ÀÓù
+			//çº¢è“æ°´æ™¶
+			//çº¢æ°´æ™¶+2æ”»å‡»
+			//è“æ°´æ™¶+2é˜²å¾¡
 			else if (map[playerh][playery][playerx + 1] == 4 || map[playerh][playery][playerx + 1] == 5) {
 				if (map[playerh][playery][playerx + 1] == 4)
 					player.DEF += 2;
@@ -1018,9 +1018,9 @@ void playGame()
 				map[playerh][playery][playerx] = 1;
 				playerx++;
 			}
-			//ÏÂÒ»²½ÊÇ½±±­
+			//ä¸‹ä¸€æ­¥æ˜¯å¥–æ¯
 			else if (map[playerh][playery][playerx + 1] == 100) {
-				ID = MessageBox(NULL, "ÊÇ·ñÍË³öÓÎÏ·", "you win £¡£¡", MB_YESNO);
+				ID = MessageBox(NULL, "æ˜¯å¦é€€å‡ºæ¸¸æˆ", "you win ï¼ï¼", MB_YESNO);
 				if (ID == IDYES)
 				{
 					exit(0);
@@ -1029,13 +1029,13 @@ void playGame()
 				map[playerh][playery][playerx] = 1;
 				playerx++;
 			}
-			//ÏÂÒ»²½ÊÇÏòÉÏÂ¥Ìİ
+			//ä¸‹ä¸€æ­¥æ˜¯å‘ä¸Šæ¥¼æ¢¯
 			else if (map[playerh][playery][playerx + 1] == 98) {
 				map[playerh][playery][playerx] = 1;
 				playerh++;
 				Change(playerh, 1);
 			}
-			//ÏÂÒ»²½ÊÇÏòÏÂÂ¥Ìİ
+			//ä¸‹ä¸€æ­¥æ˜¯å‘ä¸‹æ¥¼æ¢¯
 			else if (map[playerh][playery][playerx + 1] == 97) {
 				map[playerh][playery][playerx] = 1;
 				playerh--;
@@ -1043,8 +1043,8 @@ void playGame()
 			}
 			break;
 		}
-		SetMap();  //ÖØĞÂÏÔÊ¾µØÍ¼
-		SetPlayer(); //ÖØĞÂÏÔÊ¾½ÇÉ«ĞÅÏ¢
+		SetMap();  //é‡æ–°æ˜¾ç¤ºåœ°å›¾
+		SetPlayer(); //é‡æ–°æ˜¾ç¤ºè§’è‰²ä¿¡æ¯
 	}
 }
 
