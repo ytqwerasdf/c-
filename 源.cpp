@@ -332,7 +332,7 @@ void SetPlayer()
 
 void Music()
 {
-	PlaySound(TEXT("反方向的钟.wav"), 0, SND_FILENAME | SND_ASYNC | SND_LOOP);
+	PlaySound(TEXT("背景音乐.wav"), 0, SND_FILENAME | SND_ASYNC | SND_LOOP);
 }
 /*
 *   加载游戏图片
